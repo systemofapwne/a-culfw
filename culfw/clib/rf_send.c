@@ -101,12 +101,15 @@ sendraw(uint8_t *msg, uint8_t sync, uint8_t nbyte, uint8_t bitoff,
 {
   // 12*800+1200+nbyte*(8*1000)+(bits*1000)+800+10000 
   // message len is < (nbyte+2)*repeat in 10ms units.
-  int8_t i, j, sum = (nbyte+2)*repeat + addH + addL;
+  int8_t i, j;
+#ifndef NO_CREDITS
+  int8_t sum = (nbyte+2)*repeat + addH + addL;
   if (credit_10ms < sum) {
     DS_P(PSTR("LOVF\r\n"));
     return;
   }
   credit_10ms -= sum;
+#endif
 
   LED_ON();
 

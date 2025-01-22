@@ -186,6 +186,7 @@ maico_sendraw(uint8_t *dec)
 {
   uint8_t hblen = 0x0b;
   //1kb/s = 1 bit/ms. we send 1 sec preamble + hblen*8 bits
+#ifndef NO_CREDITS
   uint32_t sum = (hblen*8)/10;
   if (credit_10ms < sum) {
     MULTICC_PREFIX();
@@ -193,7 +194,7 @@ maico_sendraw(uint8_t *dec)
     return;
   }
   credit_10ms -= sum;
-
+#endif
 
 #ifdef USE_RF_MODE
   change_RF_mode(RF_mode_maico);

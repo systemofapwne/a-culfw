@@ -321,7 +321,9 @@ fhtsend(char *in)
       for(uint8_t i = 0 ; i < FHT_8V_NUM; i++ )
         if(fht8v_buf[2*i] != FHT_8V_DISABLED )
           cnt++;
+#ifndef NO_CREDITS
       credit_10ms += (4*fht8v_ctsync);   // should be 3.75 = 75ms / 2 / 10
+#endif
       
     } else {                           // Valve position
       uint8_t idx = (hb[0]-fht_hc0)*2;
